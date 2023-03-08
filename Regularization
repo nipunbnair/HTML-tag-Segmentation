@@ -1,0 +1,91 @@
+clear all;clf;clc
+I=imread("dataset/test/image_10.png");
+imshow(I)
+bw = imbinarize(rgb2gray(I));
+bw = bwareaopen(bw,50);
+imshow(bw)
+img=edge(bw,'sobel');
+imshow(img)
+j2=rgb2gray(I);
+threshrows=1;
+threshinrows=0.2;
+for k=1:size(img,1)
+    count=0;
+    imgtemp=img(k,:)>=threshinrows;
+    for i=1:size(imgtemp,2)
+        if imgtemp(i)==true
+            count=count+1;
+        end
+    end
+    if (count>threshrows)
+        j2(k,:)=img(k,:);
+    else
+        j2(k,:)=999+zeros(size(img(k,:),1));
+    end
+end
+imshow(j2)
+Arr=[];
+Arr1=[];
+index=-1;
+stop=true;
+for k=1:size(img,1)
+    count=0;
+    imgtemp=img(k,:)>=threshinrows;
+    for i=1:size(imgtemp,2)
+        if imgtemp(i)==true
+            count=count+1;
+        end
+    end
+    if (count>threshrows) & stop==true
+        stop=false;
+        Arr=[Arr k];
+    elseif (count<=threshrows) & stop==false
+        Arr1=[Arr1 k];
+        stop=true;
+    end   
+end
+if size(Arr)==size(Arr1)
+    idx=(Arr1-Arr)<15;
+idx1=[false idx(1:end-1)];
+Arr1(idx)=[];
+Arr(idx1)=[];
+end
+count=0;
+threshcolumns=3;
+threshincolumns=0.01;
+for i=1:min(size(Arr,2),size(Arr1,2))
+   Rows=I(Arr(i):Arr1(i),:,:);
+   img=edge(rgb2gray(Rows),'sobel');
+j2=rgb2gray(Rows);
+for k=1:size(img,2)
+    if (any(img(:,k)>=threshcolumns))
+        j2(:,k)=img(:,k);
+    else
+        j2(:,k)=999+zeros(size(img(:,k),2));
+    end   
+end
+Arr2=[];
+Arr3=[];
+Coord=[[]];
+index=-1;
+stop=true;
+for k=1:size(img,2)
+    if (any(img(:,k)>=threshincolumns)) & stop==true
+        stop=false;
+        Arr2=[Arr2 k];
+    elseif (~any(img(:,k)>=threshincolumns)) & stop==false
+        Arr3=[Arr3 k];
+        stop=true;
+    end   
+end
+%idx=(Arr3-Arr2)<5;
+%idx1=[false idx(1:end-1)];
+%Arr2(idx)=[];
+%Arr3(idx1)=[];
+for c=1:size(Arr3,2)
+    count=count+1;
+    figure(count)
+    imshow(Rows(:,Arr2(c):Arr3(c),:))
+    %imshow(Rows)
+end
+end
