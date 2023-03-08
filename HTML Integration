@@ -1,0 +1,50 @@
+warning('off','all')
+filename ="sip\original_file.html";
+fid = fopen(filename,'wt');
+fprintf(fid, "<!DOCTYPE html><html>");
+%Label;
+Coord=[0,0];
+fprintf(fid,'<style>div.LabelH{position: fixed;top: %5dpx;left: %5dpx;}</style><div class="LabelH"> <label for="Basic Salary">Basic Salary:</label></div>',Coord);
+%CheckBox
+Coord=[200,0];
+fprintf(fid,'<style>div.CB {position: fixed;top: %5dpx;left: %5dpx;width: 100px;}</style><div class="CB"><input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"></div>',Coord);
+%Radio Button
+Coord=[200,100];
+fprintf(fid,'<style>div.RB {position: fixed;top: %5dpx;left: %5dpx;width: 100px;}</style><div class="RB"><input type="radio" id="html" name="fav_language" value="HTML"></div>',Coord);
+%Link
+Coord=[300,0];
+fprintf(fid,'<style>div.link {position: fixed;left: %5dpx;top: %5dpx;}</style><div class="link"><a href="#">link text</a></div>',Coord);
+%Select
+Coord=[300,100];
+fprintf(fid,'<style>div.Select {position: fixed;top: %5dpx;left: %5dpx;}</style><div class="Select"><select name="File_Year" id="File Year"><option value="2020-2021">2020-2021</option><option value="2021-2022">2021-2022</option></select></div>',Coord);
+%textarea
+Coord=[400,0];
+fprintf(fid,'<style>div.Text {position: fixed;top: %5dpx;left: %5dpx;}</style><div class="Text"><input type="text" id="fname" name="fname"></div>',Coord);
+%Table
+Coord=[400,100];
+fprintf(fid,'<style>table, th, td {border: 1px solid black;}div.table {position: fixed;top: %5dpx;left: %5dpx;}</style><div class="table"><table><tr><th>Month</th><th>Savings</th></tr><tr><td>January</td><td>$100</td></tr></table></div>',Coord);
+%Paragraph
+Coord=[500,0];
+fprintf(fid,'<style>div.paragraph {position: fixed;top: %5dpx;left: %5dpx;}</style></head><body><div class="paragraph"><p>This is a paragraph</p></div></body></html>',Coord);
+%Heading
+Coord=[500,100];
+fprintf(fid,'<style>div.heading {position: fixed;top: %5dpx;left: %5dpx;}</style><div class="heading"><h1>Heading</h1></div>',Coord);
+%Pagination
+Coord=[600,0];
+fprintf(fid,'<style>.pagination {display: inline-block;position: fixed;top: %5dpx;left: %5dpx;}.pagination a {color: black;float: left;padding: 8px 16px;text-decoration: none;}</style><div class="pagination"><a href="#">&laquo;</a><a href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">&raquo;</a></div>',Coord);
+%Button
+Coord=[600,100];
+fprintf(fid,'<style>div.Button {position: fixed;top: %5dpx;left: %5dpx;}</style><div class="Button"><button type="button">Click Me!</button></div>',Coord);
+%Textbox
+Coord=[700,0];
+fprintf(fid,'<style>div.Text {position: fixed;top: %5dpx;left: %5dpx;}</style><div class="Text"><input type="text" id="fname" name="fname"></div>',Coord);
+%image
+Coord=[1000,300];
+fprintf(fid,'<style>divs {position: fixed;left: %5dpx;top: %5dpx; width: 250px;height: 250px;border: solid black 1px; background-image: url("w3css.gif");background-repeat: no-repeat; }</style><divs></divs>',Coord);
+fprintf(fid, '</html>');
+fclose(fid);
+fig = uifigure;
+fig.Position = [500 500 380 445];
+h = uihtml(fig);
+h.Position = [10 10 360 420];
+h.HTMLSource = fullfile(pwd,'sip/original_file.html');
